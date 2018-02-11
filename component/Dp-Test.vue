@@ -1,5 +1,5 @@
 <template>
-<div>
+<div class="wrapper">
   <p>{{texto}}</p>
 <!--   <button v-on:click="loadStates()">Cargar estados</button>-->
 <!-- <select>
@@ -27,108 +27,122 @@ cuando carga la página.
 
 -->
 <script>
-import axios from 'axios'
+import axios from "axios";
 
 export default {
-    name:'Dropdown',
-    data () {
-        return {
-          texto: 'variable texto dropdown',
-          mockStates: [],
-          search:'',
-          itemSelected:[]
-        }  
+  name: "Dropdown",
+  data() {
+    return {
+      texto: "variable texto dropdown",
+      mockStates: [],
+      search: "",
+      itemSelected: []
+    };
+  },
+  props: {
+    textoFromParent: {
+      required: false,
+      type: String
+    }
+  },
+  computed: {
+    // statesArray () {
+    //     let _statesArray = []
+    //     Object.keys(this.mockStates).forEach(key => {
+    //         _statesArray.push(this.mockStates[key])
+    //     })
+    //     return _statesArray
+    // }
+
+    filterState() {
+      // let filterTmp= []
+
+      // for (let i=0; i<this.mockStates.length;i++){
+      //     let state=this.mockStates[i]
+      //     console.log(state);
+
+      //     if(state.toLowerCase().includes(this.search.toLowerCase())){
+      //         filterTmp.push(state);
+      //     }
+      // }
+      // return filterTmp;
+
+      return this.mockStates.filter(state => {
+        return state.toLowerCase().includes(this.search.toLowerCase());
+      });
+    }
+  },
+  methods: {
+    loadStates() {
+      this.mockStates = [];
+      axios.get("http://localhost:3000").then(response => {
+        Object.keys(response.data).forEach(key => {
+          this.mockStates.push(response.data[key]);
+        });
+      });
     },
-    props:{
-        textoFromParent:{
-            required:false, 
-            type:String
-        }
+    removeItem(item) {
+      this.itemSelected = this.itemSelected.filter(element => {
+        return element !== item;
+      });
+      //queremos la lista otra vez entera menos los elementos seleccionados, hacemos llamada y comparamos
+      //para comprobar y eliminarlos elementos.
+      this.loadStates();
+      this.mockStates = this.mockStates.filter(element => {
+        return this.itemSelected.indexOf(element) === -1;
+      });
     },
-    computed: {
-        // statesArray () {
-        //     let _statesArray = []
-        //     Object.keys(this.mockStates).forEach(key => {
-        //         _statesArray.push(this.mockStates[key])
-        //     })
-        //     return _statesArray
-        // }
+    clickDropdown() {
+      if (this.mockStates.indexOf(this.search) !== -1) {
+        this.itemSelected.push(this.search);
+        this.mockStates = this.mockStates.filter(element => {
+          return element !== this.search;
+        });
+        this.search = "";
+      }
+      //vaciamos el search
 
-        filterState(){
-            // let filterTmp= []
-            
-            // for (let i=0; i<this.mockStates.length;i++){
-            //     let state=this.mockStates[i]
-            //     console.log(state);
+      console.log("EVENTO");
+    }
+  },
 
-            //     if(state.toLowerCase().includes(this.search.toLowerCase())){
-            //         filterTmp.push(state);
-            //     }
-            // }
-            // return filterTmp;
-
-        return this.mockStates.filter(state=>{
-            return state.toLowerCase().includes(this.search.toLowerCase())
-        })
-
-        }
-    },
-    methods: {
-        loadStates() {
-            this.mockStates=[]
-            axios.get('http://localhost:3000')
-            .then( response => {
-                Object.keys(response.data).forEach(key => {
-                    this.mockStates.push(response.data[key])
-                })
-            })
-        },
-        removeItem(item){
-            this.itemSelected = this.itemSelected.filter(element=>{
-                return element !== item
-            })
-            //queremos la lista otra vez entera menos los elementos seleccionados, hacemos llamada y comparamos 
-            //para comprobar y eliminarlos elementos.
-            this.loadStates()
-            this.mockStates = this.mockStates.filter(element=>{
-                 return this.itemSelected.indexOf(element) === -1
-            })
-            
-        },
-        clickDropdown(){
-            
-            if(this.mockStates.indexOf(this.search) !== -1){
-                this.itemSelected.push(this.search)
-                this.mockStates = this.mockStates.filter(element=>{
-                    return element !== this.search
-                })
-                 this.search =''
-            }
-            //vaciamos el search
-           
-
-            console.log("EVENTO")
-
-
-
-        }
-    },
-
-     mounted() {
-         this.loadStates()
-     }
-}
+  mounted() {
+    this.loadStates();
+  }
+};
 </script>
 <style scoped>
-li{
-    display:block;
-}
-span{
-    background: #ccc;
-    padding: 10px;
-}
-.tag{
-    display: inline;
-}
+    .wrapper{
+        box-sizing: border-box;
+        max-width: 1024px;
+        min-width: 320px;
+        margin: 0 auto;
+        padding: 0 8px;
+    }
+    input{
+        width:90%;
+        padding: 0.5em 0.5em;
+        font-size: 1.2em;
+        border-radius: 3px;
+        border: 1px solid #D9D9D9;
+    }
+    li {
+        display: block;
+    }
+    span {
+        background: #ccc;
+        padding: 10px;
+    }
+    .tag {
+        display: inline;
+    }
+    @media only screen and (min-width: 48em) {
+  
+     
+    input{
+        width: 50%;
+        
+    }
+    }
 </style>
 
