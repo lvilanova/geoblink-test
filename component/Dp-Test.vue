@@ -1,11 +1,11 @@
 <template>
 <div>
   <p>{{texto}}</p>
-    <button v-on:click="loadStates()">Cargar estados</button>
+<!--   <button v-on:click="loadStates()">Cargar estados</button>-->
 <!-- <select>
     <option v-for="item in this.filterState" v-bind:key="item" > {{ item }}</option>
 </select> -->
- <input v-on:input="clickDropdown()" list="lista" type="text" v-model="search" placeholder="Search title.." name ="whatever"/>
+ <input v-on:input="clickDropdown()" list="lista" type="text" v-model="search" placeholder="list of states of USA" name ="whatever"/>
     <datalist id="lista">
         <option  v-for = "state in this.mockStates" v-bind:key="state">{{state}}</option>
      </datalist>       

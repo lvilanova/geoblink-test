@@ -1,5 +1,4 @@
 module.exports = {
-
         "AL": "Alabama",
         "AK": "Alaska",
         "AZ": "Arizona",
@@ -48,7 +47,7 @@ module.exports = {
         "WV": "West Virginia",
         "WI": "Wisconsin",
         "WY": "Wyoming"
-        }
+}
 
 
 
