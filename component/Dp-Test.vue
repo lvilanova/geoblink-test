@@ -1,5 +1,10 @@
 <template>
 <div class="wrapper">
+
+     <div class="tag" v-for="item in this.itemSelected" v-bind:key="item">
+        <span v-on:click="removeItem(item)">{{item}}</span> 
+    </div>   
+
   <p>{{texto}}</p>
 <!--   <button v-on:click="loadStates()">Cargar estados</button>-->
 <!-- <select>
@@ -8,12 +13,8 @@
  <input v-on:input="clickDropdown()" list="lista" type="text" v-model="search" placeholder="list of states of USA" name ="whatever"/>
     <datalist id="lista">
         <option  v-for = "state in this.mockStates" v-bind:key="state">{{state}}</option>
-     </datalist>       
- 
+    </datalist>       
 
-     <div class="tag" v-for="item in this.itemSelected" v-bind:key="item">
-        <span v-on:click="removeItem(item)">x</span><span>{{item}}</span> 
-    </div>   
 
  <!-- 
      por JS utilizamos filterState, por html5, utilizamos this.mockstates
@@ -33,7 +34,7 @@ export default {
   name: "Dropdown",
   data() {
     return {
-      texto: "variable texto dropdown",
+      texto: "Please, select your state",
       mockStates: [],
       search: "",
       itemSelected: []
@@ -112,37 +113,64 @@ export default {
 };
 </script>
 <style scoped>
-    .wrapper{
-        box-sizing: border-box;
-        max-width: 1024px;
-        min-width: 320px;
-        margin: 0 auto;
-        padding: 0 8px;
-    }
-    input{
-        width:90%;
-        padding: 0.5em 0.5em;
-        font-size: 1.2em;
-        border-radius: 3px;
-        border: 1px solid #D9D9D9;
-    }
-    li {
-        display: block;
-    }
-    span {
-        background: #ccc;
-        padding: 10px;
-    }
-    .tag {
-        display: inline;
-    }
-    @media only screen and (min-width: 48em) {
-  
-     
-    input{
-        width: 50%;
-        
-    }
-    }
+.wrapper {
+  box-sizing: border-box;
+  max-width: 1024px;
+  min-width: 320px;
+  margin: 0 auto;
+  padding: 0 8px;
+}
+input {
+  width: 90%;
+  padding: 0.5em 0.5em;
+  font-size: 1.2em;
+  border-radius: 3px;
+  border: 1px solid #d9d9d9;
+}
+input::-webkit-calendar-picker-indicator {
+  opacity: 100;
+}
+li {
+  display: block;
+}
+
+.tag {
+  display: inline;
+}
+.tag {
+  cursor: pointer;
+  background: #eee;
+  border-radius: 3px 0 0 3px;
+  color: #999;
+  display: inline-block;
+  height: 26px;
+  line-height: 26px;
+  padding: 0 20px 0 23px;
+  position: relative;
+  margin: 0 10px 10px 0;
+  text-decoration: none;
+}
+.tag::before {
+  content: "x";
+  height: 6px;
+  left: 10px;
+  position: absolute;
+  width: 6px;
+}
+.tag::after {
+  background: #fff;
+  border-bottom: 13px solid transparent;
+  border-left: 10px solid #eee;
+  border-top: 13px solid transparent;
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+@media only screen and (min-width: 48em) {
+  input {
+    width: 50%;
+  }
+}
 </style>
 
