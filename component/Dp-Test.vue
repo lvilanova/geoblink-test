@@ -4,8 +4,11 @@
      <div class="tag" v-for="item in this.itemSelected" v-bind:key="item">
         <span v-on:click="removeItem(item)">{{item}}</span> 
     </div>   
+    
+    <p>{{texto}}   
+      <img src="../src/assets/american-flag.svg" class="american-flag">
+    </p>
 
-  <p>{{texto}}</p>
 <!--   <button v-on:click="loadStates()">Cargar estados</button>-->
 <!-- <select>
     <option v-for="item in this.filterState" v-bind:key="item" > {{ item }}</option>
@@ -25,7 +28,6 @@
 Ahora mismo estamos cargando los estados en un evento click a segundos
 Por eso tenemos la variable mockStates vacía en una carga inicial, si no la tendríamos en el mounted que es
 cuando carga la página. 
-
 -->
 <script>
 import axios from "axios";
@@ -166,6 +168,12 @@ li {
   position: absolute;
   right: 0;
   top: 0;
+}
+.american-flag {
+  position: relative;
+  top: 4px;
+  width: 40px;
+  padding-left: 8px;
 }
 @media only screen and (min-width: 48em) {
   input {
