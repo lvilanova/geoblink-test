@@ -8,7 +8,7 @@
       <p>{{texto}}   
          <img src="../src/assets/american-flag.svg" class="american-flag">
       </p>
-      <input v-on:input="clickDropdown()" list="lista" type="text" v-model="search" placeholder="list of states of USA" name ="whatever"/>
+      <input v-on:input="clickDropdown()" list="lista" type="text" v-model="search" placeholder="list of U.S. states" name ="whatever"/>
       <datalist id="lista">
          <option  v-for = "state in this.mockStates" v-bind:key="state">{{state}}</option>
       </datalist>
@@ -108,7 +108,7 @@ export default {
       display: inline-block;
       height: 26px;
       line-height: 26px;
-      padding: 0 20px 0 23px;
+      padding: 0 15px 0 23px;
       position: relative;
       margin: 0 10px 10px 0;
       text-decoration: none;
